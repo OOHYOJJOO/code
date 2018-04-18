@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com/DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="join">
+   <typeAlias alias="user" type="com.company.train.User"/>
+   
+   <select id="InsertJoinUser" resultClass="user">
+     insert into user values(#userId#,#password#,#userName#,#userPno#)
+   </select>
+</sqlMap>
