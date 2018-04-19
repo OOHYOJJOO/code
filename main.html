@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Peach_App</title>
+    
+    <link rel="stylesheet" href="themes/ddd.min.css" />
+    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <script type="text/javascript" src="js/main.js"></script>
+    <script src="dbHandle.js"></script>	
+    
+    <script> 
+    var varSecret;
+    var varName;
+    $(document).ready(function() {
+    	openDB();
+    	createTable();
+    	
+    	$('#bntAdd').click(function() {
+			insertPeach(); 
+		});  
+    	
+    	$('#bntSubmit').click(function(){
+    		updatePeach();
+    	});
+    	
+    	$('#bntDelete').click(function(){
+    		deletePeach();	
+    	});
+    	
+    	$('#Newspeed').click(function(){
+    		ListSearch();
+    	});
+    });
+    
+    function ChangeColor(t)
+    {
+        if( t == '1' ){        
+            document.getElementById('object2').className = "img1";        
+        }else if( t == '2' ) {
+            document.getElementById('object2').className = "img2";
+        }else if( t == '3' ) {
+            document.getElementById('object2').className = "img3";
+        }
+    }    
+   </script>
+   <style>
+	#object2 {backgrond-color:#FAF4C0; width:320px; height:700px; font-size:15pt; color:#ffffff;} 
+	.img1 {background-image:url("2.jpg"); background-repeat:no-repeat; font-color:#FF007F;}
+	.img2 {background-image:url("3.jpg"); background-repeat:no-repeat}
+	.img3 {background-image:url("4.jpg"); background-repeat:no-repeat}
+   
+   td {font-size:10pt;}
+   </style>     
+   
+</head>
+
+<body>
+	<div data-role="page" data-theme="a" id="main_page">
+		<div data-role="panel" data-position="left" data-display="overlay" data-theme="a" id="mypanel">
+			<h2>Profile.</h2>
+			<input type="text" name="user" id="user">
+			<h3>Phone Num.</h3><p>010-123-4567</p>
+			<h3>E-Mail Add.</h3><p>fghhong@naver.com</p>
+	
+			
+            <div class="ui-grid-a">
+						<div class="ui-block-a"><a href="tel:01012345678" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-mini ui-btn-icon-left ui-icon-phone">Call</a></div>
+						<div class="ui-block-b"><a href="sms:01012345678" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-mini ui-btn-icon-left ui-icon-mail">Msg</a></div>
+						<!--<div class="ui-block-c"><a  id="kakao-link-btn" href="javascript:;" class="ui-btn ui-shadow ui-corner-all ui-btn-f ui-mini">카톡공유</a></div>-->
+			</div>
+		</div>
+		
+			<div data-role="header">
+				<a href="#mypanel" class="ui-btn ui-shadow ui-corner-all ui-icon-bars ui-btn-icon-notext ui-btn-b ui-btn-inline"></a>
+				<h2>Mozzi</h2>
+			</div>
+			<div data-role="content" >
+			<input type="text" id="varName">
+			<input type="button" id="bntDelete" value="삭제">
+				<div class="ui-grid-a">
+						<div class="ui-block-a"><a href="#enter_page" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-mini"><img src="insert.jpg"><br>글올리기</a></div>
+						<div class="ui-block-b"><a id="Newspeed" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-mini"><img src="news.jpg"><br>뉴스피드</a></div>
+						<!--<div class="ui-block-c"><a  id="kakao-link-btn" href="javascript:;" class="ui-btn ui-shadow ui-corner-all ui-btn-f ui-mini">카톡공유</a></div>-->
+				</div>
+			
+			<select name="type3" id="type3" data-native-menu="false" data-mini="true" data-inline="true">
+			<option>주제</option>
+			<option value="달달">달달</option>
+			<option value="슬픔">슬픔</option>
+			<option value="슬픔">슬픔</option>
+			<option value="명언">명언</option>
+			<option value="19금">19금</option>
+			</select>
+			<ul data-role="listview" id="ListArea" data-divider-theme="a" data-inset="true">
+			
+	 		</ul>
+			</div>
+			<div data-role="footer"  data-theme="b" data-position="fixed" data-fullscreen="true">
+					<div data-role="navbar">
+						<ul>
+							<li><a href="#" data-icon="star">btn1</a></li>
+							<li><a href="#" data-icon="action">btn2</a></li>
+							<li><a href="#" data-icon="power">btn3</a></li>
+						</ul>
+					</div><!-- /navbar -->
+			</div><!-- /footer -->
+		
+	 </div>
+	 <!-- 글올리기 -->
+	 <div data-role="page" id="enter_page">
+	 	<div data-role="header">
+	 	<a href="#" data-icon="back" data-rel="back" data-direction="reverse">Back</a>
+	 	<h1>Mozzi</h1>
+	 	</div>
+	 	<div data-role="content" id="content1">
+	 		<form name="form2">
+	 			<select name="type2" id="type2" data-native-menu="false" data-mini="true" data-inline="true">
+	 				<option>주제</option>
+	 				<option value="선택">선택</option>
+					<option value="달달">달달</option>
+					<option value="기쁨">기쁨</option>
+					<option value="슬픔">슬픔</option>
+					<option value="명언">명언</option>
+					<option value="19금">19금</option>
+				</select>
+				<select name="region2" id="region2" data-native-menu="false" data-mini="true" data-inline="true">
+	 				<option>지역</option>
+	 				<option value="선택">선택</option>
+					<option value="서울">서울</option>
+					<option value="경기">경기</option>
+					<option value="강원">강원</option>
+					<option value="호남">호남</option>
+					<option value="영남">영남</option>
+					<option value="충청">충청</option>
+					<option value="제주">제주</option>
+				</select>
+				
+				<table>
+				<tr><td colspan="3">먼저, 배경을 골라주세요!</td></tr>
+				<tr align="center">
+				<td><input type="button" onclick="ChangeColor('1');" value="1"></td>
+				<td><input type="button" onclick="ChangeColor('2');" value="2"></td>
+				<td><input type="button" onclick="ChangeColor('3');" value="3"></td>
+				</tr></table>
+				<textarea placeholder="내용을 입력하세요." id="object2"></textarea>
+	
+				<hr>
+				
+				
+				<label for="tag2">태그</label>
+				<input type="text" id="tag2" name="tag2">
+				<label for="secret2">비밀번호</label>
+				<input type="password" id="secret2" name="secret2" size="4" maxlength="4">
+				
+				<input type="button" value="확인" id="bntSubmit" >
+	 		</form>
+	 	</div>
+	 </div> 
+	 
+</body>
+</html>
